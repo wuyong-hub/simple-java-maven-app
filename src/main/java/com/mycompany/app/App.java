@@ -21,5 +21,8 @@ public class App
     private final String sayHello(){
 	return "Hello World!";
     }
-
+    
+    public String test(){
+ 	return "TEST";
+    }
 }
