@@ -6,9 +6,11 @@ package com.mycompany.app;
 public class App
 {
 
-    private final String message = "Hello,Jenkins!";
+    private String message = "Hello World!";
 
-    public App() {}
+    public App() {
+	message = "Hello,Jenkins!";
+    }
 
     public static void main(String[] args) {
         System.out.println(new App().getMessage());
