@@ -2,15 +2,18 @@ package com.wysoft.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Hello world!
  */
 @SpringBootApplication
+@RestController
 public class App {
 
 	private String message = "Hello World!";
-
+	
 	public App() {
 		message = "Hello,Jenkins!";
 	}
@@ -27,6 +30,7 @@ public class App {
 		return message;
 	}
 
+	@RequestMapping("/test")
 	public String test() {
 		return "TEST";
 	}
