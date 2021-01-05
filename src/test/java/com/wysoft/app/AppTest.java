@@ -30,7 +30,7 @@ public class AppTest {
 
 	@Test
 	public void testAppMain() {
-		App.main(null);
+		App.printMessage(null);
 		try {
 			assertEquals("Hello,Jenkins!" + System.getProperty("line.separator"), outContent.toString());
 		} catch (AssertionError e) {
