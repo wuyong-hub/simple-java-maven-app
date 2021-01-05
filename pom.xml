@@ -38,8 +38,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-                <mainClass>com.wysoft.app.App</mainClass>
-            </configuration>
+					<mainClass>com.wysoft.app.App</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
