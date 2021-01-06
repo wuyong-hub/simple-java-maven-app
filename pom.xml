@@ -45,7 +45,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<fork>true</fork>
+					<mainClass>com.wysoft.app.App</mainClass>
 				</configuration>
 			</plugin>
 			<plugin>
