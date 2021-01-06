@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '/usr/local/apache-maven-3.6.6/bin/mvn -B -DskipTests clean package'
+                sh '/usr/local/apache-maven-3.6.3/bin/mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                sh '/usr/local/apache-maven-3.6.6/bin/mvn test'
+                sh '/usr/local/apache-maven-3.6.3/bin/mvn test'
             }
             post {
                 always {
