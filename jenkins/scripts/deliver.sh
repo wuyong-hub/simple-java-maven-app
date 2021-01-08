@@ -20,8 +20,8 @@ set -x
 VERSION=`/usr/local/apache-maven-3.6.3/bin/mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
 set +x
 
-echo 'The following command runs and outputs the execution of your Java'
-echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
+#echo 'The following command runs and outputs the execution of your Java'
+#echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 #set -x
 #java -jar target/${NAME}-${VERSION}.jar
 
@@ -32,7 +32,8 @@ if test -n "$CONTAINERID"
 then
    docker stop $CONTAINERID
    docker container rm $CONTAINERID
-   docker image rm ${NAME}
+   IMAGEID=`docker images | grep ${NAME} | awk '{print $3}'`
+   docker image rm $IMAGEID
 fi
 set +x
 
