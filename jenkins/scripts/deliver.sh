@@ -27,7 +27,7 @@ echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 
 echo 'remove old image.'
 set -x
-CONTAINERID=`docker ps -a | grep blue | awk '{print $1}'`
+CONTAINERID=`docker ps -a | grep ${NAME} | awk '{print $1}'`
 if test -n "$CONTAINERID"
 then
    docker stop $CONTAINERID
