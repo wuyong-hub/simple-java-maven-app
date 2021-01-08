@@ -28,7 +28,7 @@ spec:
     spec: 
       containers: 
       - name: simple-java-maven-app 
-        image: docker.io/siriuszg/simple-java-maven-app-amd64:v1.5.1      #默认的镜像是使用google的，这里改成内网 ，可通过docker hub网页查找镜像及版本
+        image: simple-java-maven-app:0.0.1-SNAPSHOT      #默认的镜像是使用google的，这里改成内网 ，可通过docker hub网页查找镜像及版本
         imagePullPolicy: Never 
         ports: 
         - containerPort: 9900 
