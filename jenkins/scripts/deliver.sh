@@ -28,7 +28,7 @@ echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 echo 'remove old image.'
 set -x
 CONTAINERID=`docker ps -a | grep blue | awk '{print $1}'`
-if [$CONTAINERID] 
+if test -n "$CONTAINERID"
 then
    docker stop $CONTAINERID
    docker container rm $CONTAINERID
@@ -40,7 +40,7 @@ echo 'build docker image.'
 mkdir docker-build
 cp target/${NAME}-${VERSION}.jar docker-build/app.jar
 cp Dockerfile docker-build/
-cd dcoker-build
+cd docker-build
 set -x
 docker build -t ${NAME}:${VERSION}
 set +x
