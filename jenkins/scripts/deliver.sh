@@ -47,9 +47,17 @@ set -x
 docker build -t ${NAME}:${VERSION} .
 set +x
 
-echo 'run image.'
+#Docker run 
+#echo 'run image.'
+#set -x
+#docker run -d -p 9900:9900 ${NAME}:${VERSION}
+#set +x
+
+#Kubernetes run
+echo 'run k8s.'
 set -x
-docker run -d -p 9900:9900 ${NAME}:${VERSION}
+cd ../
+kubectl apply -f kubernetes-conf.yaml
 set +x
 
 echo 'END.'
