@@ -22,5 +22,25 @@ set +x
 
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
-set -x
-java -jar target/${NAME}-${VERSION}.jar
+#set -x
+#java -jar target/${NAME}-${VERSION}.jar
+
+echo 'remove old image.'
+CONTAINERID=`docker ps -a | grep blue | awk '{print $1}'`
+if [$CONTAINERID] 
+then
+   docker stop $CONTAINERID
+   docker container rm $CONTAINERID
+   docker image rm ${NAME}
+fi
+
+echo 'build docker image.'
+mkdir docker-build
+cp target/${NAME}-${VERSION}.jar docker-build/app.jar
+cp Dockerfile docker-build/
+cd dcoker-build
+docker build -t ${NAME}:${VERSION}
+
+echo 'run image.'
+docker run -d -p 9900:9900 ${NAME}:${VERSION}
+
