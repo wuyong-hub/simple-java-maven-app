@@ -51,3 +51,5 @@ set -x
 docker run -d -p 9900:9900 ${NAME}:${VERSION}
 set +x
 
+echo 'END.'
+
