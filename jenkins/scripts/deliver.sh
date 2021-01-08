@@ -37,6 +37,7 @@ fi
 set +x
 
 echo 'build docker image.'
+rm -rf docker-build/
 mkdir docker-build
 cp target/${NAME}-${VERSION}.jar docker-build/app.jar
 cp Dockerfile docker-build/
