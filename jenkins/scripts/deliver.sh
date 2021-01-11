@@ -44,7 +44,7 @@ cp target/${NAME}-${VERSION}.jar docker-build/app.jar
 cp Dockerfile docker-build/
 cd docker-build
 set -x
-docker build -t ${NAME}:${VERSION} .
+docker build -t ${NAME}:latest .
 set +x
 
 #Docker run 
