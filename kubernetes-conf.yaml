@@ -4,7 +4,7 @@ metadata:
   labels: 
     app: simple-java-maven-app 
   name: simple-java-maven-app 
-  namespace: kube-system 
+  namespace: kube-system
 spec: 
   replicas: 1 
   selector: 
