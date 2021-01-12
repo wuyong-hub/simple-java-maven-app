@@ -25,6 +25,8 @@ set +x
 #set -x
 #java -jar target/${NAME}-${VERSION}.jar
 
+DOCKER_REPO=182.61.138.254:5000
+
 echo 'remove old image.'
 set -x
 CONTAINERID=`docker ps -a | grep ${NAME} | awk '{print $1}'`
@@ -44,7 +46,9 @@ cp target/${NAME}-${VERSION}.jar docker-build/app.jar
 cp Dockerfile docker-build/
 cd docker-build
 set -x
-docker build -t ${NAME}:latest .
+DOCKER_NAME="$DOCKER_REPO/${NAME}:latest"
+docker build -t $DOCKER_NAME .
+docker push $DOCKER_NAME
 set +x
 
 #Docker run 
