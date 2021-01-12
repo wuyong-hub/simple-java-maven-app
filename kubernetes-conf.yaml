@@ -29,7 +29,7 @@ spec:
       containers: 
       - name: simple-java-maven-app 
         image: 182.61.138.254:5000/simple-java-maven-app:latest      #默认的镜像是使用google的，这里改成内网 ，可通过docker hub网页查找镜像及版本
-        imagePullPolicy: IfNotPresent 
+        imagePullPolicy: Always 
         ports: 
         - containerPort: 9900 
           protocol: TCP 
