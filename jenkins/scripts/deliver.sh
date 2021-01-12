@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
-
-echo 'The following Maven command installs your Maven-built Java application'
-echo 'into the local Maven repository, which will ultimately be stored in'
-echo 'Jenkins''s local Maven repository (and the "maven-repository" Docker data'
-echo 'volume).'
-#set -x
-#mvn jar:jar install:install help:evaluate -Dexpression=project.name
-#set +x
-
 echo 'The following complex command extracts the value of the <name/> element'
 echo 'within <project/> of your Java/Maven project''s "pom.xml" file.'
 set -x
@@ -20,11 +11,7 @@ set -x
 VERSION=`/usr/local/apache-maven-3.6.3/bin/mvn help:evaluate -Dexpression=project.version | grep "^[^\[]"`
 set +x
 
-#echo 'The following command runs and outputs the execution of your Java'
-#echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
-#set -x
-#java -jar target/${NAME}-${VERSION}.jar
-
+#self-repo addr
 DOCKER_REPO=182.61.138.254:5000
 
 echo 'remove old image.'
@@ -39,7 +26,7 @@ then
 fi
 set +x
 
-echo 'build docker image.'
+echo 'build docker image and push to repository.'
 rm -rf docker-build/
 mkdir docker-build
 cp target/${NAME}-${VERSION}.jar docker-build/app.jar
@@ -50,12 +37,6 @@ DOCKER_NAME="$DOCKER_REPO/${NAME}:latest"
 docker build -t $DOCKER_NAME .
 docker push $DOCKER_NAME
 set +x
-
-#Docker run 
-#echo 'run image.'
-#set -x
-#docker run -d -p 9900:9900 ${NAME}:${VERSION}
-#set +x
 
 #Kubernetes run
 echo 'run k8s.'
