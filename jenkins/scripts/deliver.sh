@@ -34,6 +34,7 @@ cp Dockerfile docker-build/
 cd docker-build
 set -x
 DOCKER_NAME="$DOCKER_REPO/${NAME}:latest"
+curl  -X DELETE http://$DOCKER_REPO/v2/$NAME/manifests/latest
 docker build -t $DOCKER_NAME .
 docker push $DOCKER_NAME
 set +x
