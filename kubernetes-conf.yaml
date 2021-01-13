@@ -28,7 +28,7 @@ spec:
     spec: 
       containers: 
       - name: simple-java-maven-app 
-        image: 182.61.138.254:5000/simple-java-maven-app:latest    #默认的镜像是使用google的，这里改成私有仓库
+        image: IMAGE-TAG    #默认的镜像是使用google的，这里改成私有仓库
         imagePullPolicy: Always
         ports: 
         - containerPort: 9900

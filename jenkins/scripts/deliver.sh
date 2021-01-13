@@ -12,7 +12,9 @@ VERSION=`/usr/local/apache-maven-3.6.3/bin/mvn help:evaluate -Dexpression=projec
 set +x
 
 #self-repo addr
-DOCKER_REPO=182.61.138.254:5000
+DOCKER_REPO=182.61.138.254/library
+
+IMAGE_VERSION=`$(date +'%Y%m%d%H%M%S')_$RANDOM`
 
 echo 'remove old image.'
 set -x
@@ -33,8 +35,7 @@ cp target/${NAME}-${VERSION}.jar docker-build/app.jar
 cp Dockerfile docker-build/
 cd docker-build
 set -x
-DOCKER_NAME="$DOCKER_REPO/${NAME}:latest"
-curl -X DELETE http://$DOCKER_REPO/v2/$NAME/manifests/latest
+DOCKER_NAME="$DOCKER_REPO/${NAME}:$IMAGE_VERSION"
 docker build -t $DOCKER_NAME .
 docker push $DOCKER_NAME
 set +x
@@ -43,6 +44,8 @@ set +x
 echo 'run k8s.'
 set -x
 cd ../
+mv kubernetes-conf.yaml kubernetes-conf.yaml.tpl
+sed 's#IMAGE-TAG#${DOCKER_NAME}#g' kubernetes-conf.yaml.tpl > kubernetes-conf.yaml
 kubectl apply -f kubernetes-conf.yaml
 set +x
 
