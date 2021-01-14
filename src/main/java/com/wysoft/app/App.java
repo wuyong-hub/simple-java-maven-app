@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Hello world!
