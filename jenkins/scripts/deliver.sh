@@ -46,7 +46,7 @@ echo 'run k8s.'
 set -x
 cd ../
 mv kubernetes-conf.yaml kubernetes-conf.yaml.tpl
-sed 's#IMAGE-TAG#${DOCKER_NAME}#g' kubernetes-conf.yaml.tpl > kubernetes-conf.yaml
+sed "s#IMAGE-TAG#${DOCKER_NAME}#g" kubernetes-conf.yaml.tpl > kubernetes-conf.yaml
 kubectl apply -f kubernetes-conf.yaml
 set +x
 
