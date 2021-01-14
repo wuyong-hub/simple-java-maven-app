@@ -37,6 +37,7 @@ cd docker-build
 set -x
 DOCKER_NAME="$DOCKER_REPO/${NAME}:$IMAGE_VERSION"
 docker build -t $DOCKER_NAME .
+docker login -u admin -p Harbor12345 182.61.138.254
 docker push $DOCKER_NAME
 set +x
 
