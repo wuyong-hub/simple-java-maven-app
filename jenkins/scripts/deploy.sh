@@ -41,14 +41,11 @@ docker login -u admin -p Harbor12345 182.61.138.254
 docker push $DOCKER_NAME
 set +x
 
-#Kubernetes run
-echo 'run k8s.'
+echo 'edit k8s config file'
 set -x
 cd ../
-mv kubernetes-conf.yaml kubernetes-conf.yaml.tpl
 sed "s#IMAGE-TAG#${DOCKER_NAME}#g" kubernetes-conf.yaml.tpl > kubernetes-conf.yaml
-kubectl apply -f kubernetes-conf.yaml
 set +x
 
-echo 'END.'
+echo 'END DEPLOY.'
 
