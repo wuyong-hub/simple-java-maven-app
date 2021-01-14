@@ -14,7 +14,7 @@ set +x
 #self-repo addr
 DOCKER_REPO=182.61.138.254/library
 
-IMAGE_VERSION=`$(date +'%Y%m%d%H%M%S')_$RANDOM`
+IMAGE_VERSION="$(date +'%Y%m%d%H%M%S')_$RANDOM"
 
 echo 'remove old image.'
 set -x
