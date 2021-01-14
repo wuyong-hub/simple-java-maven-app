@@ -19,7 +19,7 @@ pipeline {
         }
          stage('Deploy') {
             steps {
-                echo "Deploy stage: ..." 
+                sh './jenkins/scripts/deploy.sh'
             }
         }
         stage('Deliver') {
