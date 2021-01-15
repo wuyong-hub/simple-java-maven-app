@@ -1,46 +1,61 @@
 package com.wysoft.app;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.alibaba.fastjson.JSONObject;
+import com.wysoft.app.service.TestService;
 
 /**
  * Unit test for simple App.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class AppTest {
-
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+	private MockMvc mockMvc;
 
 	@Before
-	public void setUpStreams() {
-		System.setOut(new PrintStream(outContent));
-	}
-	
-	@Test
-	public void testAppConstructor() {
-		try {
-			new App();
-		} catch (Exception e) {
-			fail("Construction failed.");
-		}
+	public void setupMockMvc() {
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
 	@Test
-	public void testAppMain() {
-		App.printMessage(null);
-		try {
-			assertEquals("Hello,Jenkins!" + System.getProperty("line.separator"), outContent.toString());
-		} catch (AssertionError e) {
-			fail("\"message\" is not \"Hello,Jenkins!\"");
-		}
-	}
+	public void getUserById() throws Exception {
+		TestService service = mock(TestService.class);
+		JSONObject user = new JSONObject();
+		user.put("code", 200);
+		user.put("message", "Success");
+		user.put("name", "Kevin");
+		// Mock一个结果，当userService调用getById的时候，返回user
+		doReturn(user).when(service).getUserById(any());
 
-	@After
-	public void cleanUpStreams() {
-		System.setOut(null);
+		// perform,执行一个RequestBuilders请求，会自动执行SpringMVC的流程并映射到相应的控制器执行处理
+		mockMvc.perform(MockMvcRequestBuilders
+				// 构造一个get请求
+				.get("/test/1")
+				// 请求类型 json
+				.contentType(MediaType.APPLICATION_JSON))
+				// 期望的结果状态 200
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				// 添加ResultHandler结果处理器，比如调试时 打印结果(print方法)到控制台
+				.andDo(MockMvcResultHandlers.print());
 	}
 
 }

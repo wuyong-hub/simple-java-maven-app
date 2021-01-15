@@ -1,11 +1,14 @@
 package com.wysoft.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wysoft.app.service.TestService;
 
 /**
  * Hello world!
@@ -13,6 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 @SpringBootApplication
 @RestController
 public class App {
+	@Autowired
+	private TestService service;
 
 	private String message = "Hello World!";
 	
@@ -40,8 +45,8 @@ public class App {
 		return result.toString();
 	}
 
-	@RequestMapping("/test")
-	public String test() {
-		return "TEST";
+	@RequestMapping("/test/{id:\\d+}")
+	public JSONObject test(@PathVariable Long id) {
+		return service.getUserById(id);
 	}
 }
