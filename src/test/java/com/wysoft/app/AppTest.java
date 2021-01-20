@@ -4,6 +4,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+import java.io.UnsupportedEncodingException;
+
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSONObject;
+import com.wysoft.app.model.User;
 import com.wysoft.app.service.TestService;
 
 /**
@@ -55,7 +59,37 @@ public class AppTest {
 				// 期望的结果状态 200
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				// 添加ResultHandler结果处理器，比如调试时 打印结果(print方法)到控制台
+				.andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.equalToIgnoringCase("kevin")))
 				.andDo(MockMvcResultHandlers.print());
 	}
 
+	@Test
+	public void testSaveUser() throws Exception {
+		User user = new User();
+		user.setName("王小二");
+		user.setUsername("Jim");
+		mockMvc.perform(MockMvcRequestBuilders.post("/rest/user")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.content(JSONObject.toJSONString(user)))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+		
+	}
+
+	@Test
+	public void testGetUser() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/rest/user/1")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andDo(MockMvcResultHandlers.print());
+	}
+	
+	@Test
+	public void testListUser() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.post("/rest/users")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andDo(MockMvcResultHandlers.print());
+	}
 }
